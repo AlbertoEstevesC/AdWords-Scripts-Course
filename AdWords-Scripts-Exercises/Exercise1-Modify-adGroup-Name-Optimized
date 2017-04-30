@@ -1,0 +1,23 @@
+var oldAdGroupName = "INSERT_HERE_ADGROUP_NAME";
+var newAdGroupName = "INSERT_HERE_NEW_ADGROUP_NAME";
+
+function main() {
+// Obtenemos el grupo de anuncios filtrado por nombre
+  var adGroupIterator = AdWordsApp.adGroups()
+                        .withCondition("Name = " + oldAdGroupName)
+                        .get();
+   
+  if (adGroupIterator.hasNext()){ // Paso 3.1, SI existe
+    var adGroup = adGroupIterator.next();
+    adGroup.setName(newAdGroupName); 
+  } else { // Paso 3.2, NO existe
+    var campaign = AdWordsApp.campaigns().get().next();
+    
+    var adGroupBuilder = campaign.newAdGroupBuilder();
+    
+    var adGroupOperation = adGroupBuilder
+       .withName(newAdGroupName)
+       .withStatus("PAUSED")
+       .build(); 
+  }
+} // Fin del script
