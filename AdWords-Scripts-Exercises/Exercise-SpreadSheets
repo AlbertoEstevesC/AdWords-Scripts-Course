@@ -1,0 +1,21 @@
+function main() {
+  var url = "INSERT_YOUR_URL_HERE";
+  var ss = SpreadsheetApp.openByUrl(url);
+  var sheet = ss.getSheetByName("Hoja 1");
+  var campaignIterator = AdWordsApp.campaigns().get();
+  
+  var fila = 0;
+  while (campaignIterator.hasNext()){
+    var campaign = campaignIterator.next();
+    
+    fila++; //avanzamos una fila
+    var celda_nombre = sheet.getRange(fila, 1);
+    var celda_id = sheet.getRange(fila, 2);
+    var celda_budget = sheet.getRange(fila, 3);
+    
+    celda_nombre.setValue(campaign.getName());
+    celda_id.setValue(campaign.getId());
+    celda_budget.setValue(campaign.getBudget());
+  }
+  SpreadsheetApp.flush(); // ejecutamos cambios pendientes
+} // Fin del script
