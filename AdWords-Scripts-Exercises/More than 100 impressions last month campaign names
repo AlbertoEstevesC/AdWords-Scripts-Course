@@ -1,0 +1,18 @@
+function main() { 
+
+  var campaignSelector = AdWordsApp.campaigns()
+                                   .withCondition("Impressions > 100")
+                                   .forDateRange("LAST_MONTH");
+  
+  var campaignIterator = campaignSelector.get();
+  
+  var campaign;
+  
+  while (campaignIterator.hasNext()) { // Comprobamos si hay más elementos
+    
+    campaign = campaignIterator.next(); // Obtenemos el elemento siguiente
+  
+    Logger.log("Nombre de campaña: " + campaign.getName());
+  }
+
+} // Fin del script
